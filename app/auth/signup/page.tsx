@@ -31,6 +31,7 @@ import {
 import Link from 'next/link';
 import { Separator } from '@radix-ui/react-select';
 import GoogleButton from '@/components/GoogleButton';
+import GithubButton from '@/components/GithubButton';
 
 export default function Auth() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -125,6 +126,7 @@ export default function Auth() {
                   <Separator className='bg-gray-300 w-full h-[0.5px]' />
                 </div>
                 <GoogleButton />
+                <GithubButton />
               </div>
             </CardContent>
             <CardFooter className='flex justify-end'>
