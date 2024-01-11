@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, ButtonProps } from './ui/button';
 
-const GoogleLogo: React.FC<ButtonProps> = (props) => {
+const GoogleButton: React.FC<ButtonProps> = (props) => {
   return (
     <Button
       {...props}
@@ -39,4 +39,4 @@ const GoogleLogo: React.FC<ButtonProps> = (props) => {
   );
 };
 
-export default GoogleLogo;
+export default GoogleButton;
