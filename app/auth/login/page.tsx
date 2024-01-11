@@ -21,6 +21,9 @@ import {
   FormControl,
   FormMessage,
 } from '@/components/ui/form';
+import Link from 'next/link';
+import { Separator } from '@radix-ui/react-select';
+import GoogleButton from '@/components/GoogleButton';
 
 export default function Auth() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -71,6 +74,18 @@ export default function Auth() {
                     </FormItem>
                   )}
                 />
+                <p className='text-sm text-center'>
+                  Don&apos;t have an account?
+                  <Link href={'/auth/signup'} className='px-1 text-primary'>
+                    Signup
+                  </Link>
+                </p>
+                <div className='flex items-center gap-2'>
+                  <Separator className='bg-gray-300 w-full h-[0.5px]' />
+                  <p className='text-gray-600 text-sm'>OR</p>
+                  <Separator className='bg-gray-300 w-full h-[0.5px]' />
+                </div>
+                <GoogleButton />
               </div>
             </CardContent>
             <CardFooter className='flex justify-end'>
