@@ -29,9 +29,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Link from 'next/link';
-import { Separator } from '@radix-ui/react-select';
 import GoogleButton from '@/components/GoogleButton';
 import GithubButton from '@/components/GithubButton';
+import { Separator } from '@/components/ui/separator';
 
 export default function Auth() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -123,9 +123,9 @@ export default function Auth() {
                   </Link>
                 </p>
                 <div className='flex items-center gap-2'>
-                  <Separator className='bg-gray-300 w-full h-[0.5px]' />
-                  <p className='text-gray-600 text-sm'>OR</p>
-                  <Separator className='bg-gray-300 w-full h-[0.5px]' />
+                  <Separator className='w-auto flex-grow' />
+                  <p className='text-slate-500 text-sm'>OR</p>
+                  <Separator className='w-auto flex-grow' />
                 </div>
                 <div className='grid sm:grid-cols-2 gap-4'>
                   <GoogleButton />
