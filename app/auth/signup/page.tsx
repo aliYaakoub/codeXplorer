@@ -46,74 +46,76 @@ export default function Auth() {
 
   return (
     <div className='flex justify-center items-center min-h-screen p-5'>
-      <Card className='w-[350px]'>
+      <Card className='w-[650px]'>
         <CardHeader>
-          <CardTitle className='text-center'>Please Signup</CardTitle>
+          <CardTitle className='text-center'>Create an account</CardTitle>
         </CardHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
             <CardContent>
               <div className='grid w-full items-center gap-4'>
-                <FormField
-                  control={form.control}
-                  name='username'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Username</FormLabel>
-                      <FormControl>
-                        <Input placeholder='Username' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='email'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input placeholder='Email' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='password'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input placeholder='Password' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='gender'
-                  render={({ field: { onChange, ...field } }) => (
-                    <FormItem>
-                      <FormLabel>Gender</FormLabel>
-                      <FormControl>
-                        <Select onValueChange={onChange} {...field}>
-                          <SelectTrigger>
-                            <SelectValue placeholder='Gender' />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value='Male'>Male</SelectItem>
-                            <SelectItem value='Female'>Female</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className='grid sm:grid-cols-2 gap-4'>
+                  <FormField
+                    control={form.control}
+                    name='username'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Username</FormLabel>
+                        <FormControl>
+                          <Input placeholder='Username' {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name='email'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder='Email' {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name='password'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl>
+                          <Input placeholder='Password' {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name='gender'
+                    render={({ field: { onChange, ...field } }) => (
+                      <FormItem>
+                        <FormLabel>Gender</FormLabel>
+                        <FormControl>
+                          <Select onValueChange={onChange} {...field}>
+                            <SelectTrigger>
+                              <SelectValue placeholder='Gender' />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value='Male'>Male</SelectItem>
+                              <SelectItem value='Female'>Female</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <p className='text-sm text-center'>
                   Already have an account?
                   <Link href={'/auth/login'} className='px-1 text-primary'>
@@ -125,8 +127,10 @@ export default function Auth() {
                   <p className='text-gray-600 text-sm'>OR</p>
                   <Separator className='bg-gray-300 w-full h-[0.5px]' />
                 </div>
-                <GoogleButton />
-                <GithubButton />
+                <div className='grid sm:grid-cols-2 gap-4'>
+                  <GoogleButton />
+                  <GithubButton />
+                </div>
               </div>
             </CardContent>
             <CardFooter className='flex justify-end'>
