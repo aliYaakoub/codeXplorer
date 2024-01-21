@@ -34,15 +34,16 @@ import GithubButton from '@/components/GithubButton';
 import { Separator } from '@/components/ui/separator';
 
 export default function Auth() {
+  const [file, setFile] = React.useState<File | undefined>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const form = useForm<signupFormSchemaType>({
     resolver: zodResolver(signupFormSchema),
   });
 
-  function onSubmit(values: signupFormSchemaType) {
+  const onSubmit = async (values: signupFormSchemaType) => {
     console.log(values);
-  }
+  };
 
   return (
     <div className='flex justify-center items-center min-h-screen p-5'>
@@ -55,12 +56,26 @@ export default function Auth() {
             <CardContent>
               <div className='grid w-full items-center gap-4'>
                 <div className='grid sm:grid-cols-2 gap-4'>
+                  <FormItem>
+                    <FormLabel>Profile Picture</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='file'
+                        accept='.jpg,.png,.jpeg'
+                        onChange={(e) => setFile(e.target.files?.[0])}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
                   <FormField
                     control={form.control}
                     name='username'
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Username</FormLabel>
+                        <FormLabel>
+                          Username
+                          <span className='text-red-500'>*</span>
+                        </FormLabel>
                         <FormControl>
                           <Input placeholder='Username' {...field} />
                         </FormControl>
@@ -73,7 +88,9 @@ export default function Auth() {
                     name='email'
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>
+                          Email <span className='text-red-500'>*</span>
+                        </FormLabel>
                         <FormControl>
                           <Input placeholder='Email' {...field} />
                         </FormControl>
@@ -86,9 +103,27 @@ export default function Auth() {
                     name='password'
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel>
+                          Password <span className='text-red-500'>*</span>
+                        </FormLabel>
                         <FormControl>
                           <Input placeholder='Password' {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name='confirmation-password'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Confirm Password{' '}
+                          <span className='text-red-500'>*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input placeholder='Confirm Password' {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -99,7 +134,9 @@ export default function Auth() {
                     name='gender'
                     render={({ field: { onChange, ...field } }) => (
                       <FormItem>
-                        <FormLabel>Gender</FormLabel>
+                        <FormLabel>
+                          Gender <span className='text-red-500'>*</span>
+                        </FormLabel>
                         <FormControl>
                           <Select onValueChange={onChange} {...field}>
                             <SelectTrigger>

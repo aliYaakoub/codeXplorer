@@ -35,9 +35,9 @@ export default function Auth() {
 
   form.watch();
 
-  function onSubmit(values: loginFormSchemaType) {
+  const onSubmit = async (values: loginFormSchemaType) => {
     console.log(values);
-  }
+  };
 
   return (
     <div className='flex justify-center items-center min-h-screen p-5'>
@@ -54,7 +54,9 @@ export default function Auth() {
                   name='email'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>
+                        Email <span className='text-red-500'>*</span>
+                      </FormLabel>
                       <FormControl>
                         <Input placeholder='Email' {...field} />
                       </FormControl>
@@ -67,7 +69,9 @@ export default function Auth() {
                   name='password'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>
+                        Password <span className='text-red-500'>*</span>
+                      </FormLabel>
                       <FormControl>
                         <Input placeholder='Password' {...field} />
                       </FormControl>
