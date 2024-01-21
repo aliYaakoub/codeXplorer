@@ -1,10 +1,16 @@
 'use client';
 
+import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import GoogleButton from '@/components/GoogleButton';
+import GithubButton from '@/components/GithubButton';
+import { Separator } from '@/components/ui/separator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LoadingButton from '@/components/LoadingButton';
+import FormItemWrapper from '@/components/FormItemWrapper';
 import { loginFormSchema, loginFormSchemaType } from '@/schemas/loginSchema';
 import {
   Card,
@@ -13,18 +19,6 @@ import {
   CardHeader,
   CardContent,
 } from '@/components/ui/card';
-import {
-  Form,
-  FormItem,
-  FormLabel,
-  FormField,
-  FormControl,
-  FormMessage,
-} from '@/components/ui/form';
-import Link from 'next/link';
-import GoogleButton from '@/components/GoogleButton';
-import GithubButton from '@/components/GithubButton';
-import { Separator } from '@/components/ui/separator';
 
 export default function Auth() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -49,36 +43,22 @@ export default function Auth() {
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
             <CardContent>
               <div className='grid w-full items-center gap-4'>
-                <FormField
-                  control={form.control}
+                <FormItemWrapper
+                  required
                   name='email'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Email <span className='text-red-500'>*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input placeholder='Email' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
+                  label='Email'
                   control={form.control}
+                >
+                  {({ field }) => <Input placeholder='Email' {...field} />}
+                </FormItemWrapper>
+                <FormItemWrapper
+                  required
                   name='password'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Password <span className='text-red-500'>*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input placeholder='Password' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                  label='Password'
+                  control={form.control}
+                >
+                  {({ field }) => <Input placeholder='Password' {...field} />}
+                </FormItemWrapper>
                 <p className='text-sm text-center'>
                   Don&apos;t have an account?
                   <Link href={'/auth/signup'} className='px-1 text-primary'>

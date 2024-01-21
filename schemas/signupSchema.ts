@@ -2,6 +2,7 @@ import * as z from 'zod';
 
 export const signupFormSchema = z
   .object({
+    'profile-image': z.any(),
     email: z
       .string()
       .email({ message: 'Email is invalid' })

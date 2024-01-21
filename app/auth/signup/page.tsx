@@ -1,10 +1,16 @@
 'use client';
 
+import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import GoogleButton from '@/components/GoogleButton';
+import GithubButton from '@/components/GithubButton';
+import { Separator } from '@/components/ui/separator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LoadingButton from '@/components/LoadingButton';
+import FormItemWrapper from '@/components/FormItemWrapper';
 import { signupFormSchema, signupFormSchemaType } from '@/schemas/signupSchema';
 import {
   Card,
@@ -14,24 +20,12 @@ import {
   CardContent,
 } from '@/components/ui/card';
 import {
-  Form,
-  FormItem,
-  FormLabel,
-  FormField,
-  FormControl,
-  FormMessage,
-} from '@/components/ui/form';
-import {
   Select,
-  SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectValue,
+  SelectContent,
+  SelectTrigger,
 } from '@/components/ui/select';
-import Link from 'next/link';
-import GoogleButton from '@/components/GoogleButton';
-import GithubButton from '@/components/GithubButton';
-import { Separator } from '@/components/ui/separator';
 
 export default function Auth() {
   const [file, setFile] = React.useState<File | undefined>();
@@ -42,7 +36,28 @@ export default function Auth() {
   });
 
   const onSubmit = async (values: signupFormSchemaType) => {
-    console.log(values);
+    setIsLoading(true);
+    try {
+      console.log(values);
+    } catch (err) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSetFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+
+    if (!selectedFile) return;
+
+    // reject files bigger than 50 MB
+    if (selectedFile.size > 50 * 1024 * 1024) {
+      form.setError('profile-image', {
+        message: 'image is too big',
+      });
+    } else {
+      setFile(selectedFile);
+    }
   };
 
   return (
@@ -56,102 +71,72 @@ export default function Auth() {
             <CardContent>
               <div className='grid w-full items-center gap-4'>
                 <div className='grid sm:grid-cols-2 gap-4'>
-                  <FormItem>
-                    <FormLabel>Profile Picture</FormLabel>
-                    <FormControl>
+                  <FormItemWrapper
+                    name='profile-image'
+                    label='profile Image'
+                    control={form.control}
+                  >
+                    {() => (
                       <Input
                         type='file'
                         accept='.jpg,.png,.jpeg'
-                        onChange={(e) => setFile(e.target.files?.[0])}
+                        onChange={handleSetFile}
                       />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                  <FormField
-                    control={form.control}
+                    )}
+                  </FormItemWrapper>
+                  <FormItemWrapper
+                    required
                     name='username'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Username
-                          <span className='text-red-500'>*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input placeholder='Username' {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
+                    label='Username'
                     control={form.control}
+                  >
+                    {({ field }) => <Input placeholder='Username' {...field} />}
+                  </FormItemWrapper>
+
+                  <FormItemWrapper
+                    required
                     name='email'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Email <span className='text-red-500'>*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input placeholder='Email' {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
+                    label='Email'
                     control={form.control}
+                  >
+                    {({ field }) => <Input placeholder='Email' {...field} />}
+                  </FormItemWrapper>
+                  <FormItemWrapper
+                    required
                     name='password'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Password <span className='text-red-500'>*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input placeholder='Password' {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
+                    label='Password'
                     control={form.control}
+                  >
+                    {({ field }) => <Input placeholder='Password' {...field} />}
+                  </FormItemWrapper>
+                  <FormItemWrapper
+                    required
                     name='confirmation-password'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Confirm Password{' '}
-                          <span className='text-red-500'>*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input placeholder='Confirm Password' {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
+                    label='Confirm Password'
                     control={form.control}
-                    name='gender'
-                    render={({ field: { onChange, ...field } }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Gender <span className='text-red-500'>*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Select onValueChange={onChange} {...field}>
-                            <SelectTrigger>
-                              <SelectValue placeholder='Gender' />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value='Male'>Male</SelectItem>
-                              <SelectItem value='Female'>Female</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
+                  >
+                    {({ field }) => (
+                      <Input placeholder='Confirm Password' {...field} />
                     )}
-                  />
+                  </FormItemWrapper>
+                  <FormItemWrapper
+                    required
+                    name='gender'
+                    label='Gender'
+                    control={form.control}
+                  >
+                    {({ field: { onChange, ...field } }) => (
+                      <Select onValueChange={onChange} {...field}>
+                        <SelectTrigger>
+                          <SelectValue placeholder='Gender' />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value='Male'>Male</SelectItem>
+                          <SelectItem value='Female'>Female</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </FormItemWrapper>
                 </div>
                 <p className='text-sm text-center'>
                   Already have an account?

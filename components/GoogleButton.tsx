@@ -9,7 +9,7 @@ const GoogleButton: React.FC<ButtonProps> = (props) => {
       variant='outline'
       className='flex justify-between text-gray-600'
     >
-      Continue with google
+      Continue with Google
       <svg
         width={24}
         height={24}
